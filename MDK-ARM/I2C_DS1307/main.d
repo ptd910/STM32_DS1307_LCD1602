@@ -26,4 +26,6 @@ i2c_ds1307\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 i2c_ds1307\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 i2c_ds1307\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 i2c_ds1307\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
-i2c_ds1307\main.o: ..\..\..\Library\Module_DS1307\DS1307.h
+i2c_ds1307\main.o: ../Core/Inc/DS1307.h
+i2c_ds1307\main.o: ../Core/Inc/i2c-lcd.h
+i2c_ds1307\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

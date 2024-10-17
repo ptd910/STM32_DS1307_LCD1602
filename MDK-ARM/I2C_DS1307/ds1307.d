@@ -1,5 +1,5 @@
-i2c_ds1307\ds1307.o: ..\..\..\Library\Module_DS1307\DS1307.c
-i2c_ds1307\ds1307.o: ..\..\..\Library\Module_DS1307\DS1307.h
+i2c_ds1307\ds1307.o: ..\Core\Src\DS1307.c
+i2c_ds1307\ds1307.o: ../Core/Inc/DS1307.h
 i2c_ds1307\ds1307.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 i2c_ds1307\ds1307.o: ../Core/Inc/stm32f1xx_hal_conf.h
 i2c_ds1307\ds1307.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h

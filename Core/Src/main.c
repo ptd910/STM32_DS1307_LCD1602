@@ -22,20 +22,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "DS1307.h"
+#include "i2c-lcd.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-//typedef struct
-//{
-//	uint8_t sec;
-//	uint8_t min;
-//	uint8_t hour;
-//	uint8_t day;
-//	uint8_t date;
-//	uint8_t month;
-//	uint8_t year;
-//}DS1037_Time;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -61,6 +54,8 @@ DS1037_Time time = {
 	.month =10 ,
 	.year =24 ,
 };
+uint8_t buff0[20];
+uint8_t buff1[20];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,40 +68,7 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//uint8_t B2D(uint8_t num)
-//{
-//	return ((num>>4)*10 + (num & 0x0F));
-//}
-//uint8_t D2B(uint8_t num)
-//{
-//	return (num / 10 ) << 4 | (num % 10);
-//}
-//void SET_TIME(DS1037_Time *setTime)
-//{
-//	uint8_t tempTime[7];
-//	tempTime[0] = D2B(setTime->sec);
-//	tempTime[1] = D2B(setTime->min);
-//	tempTime[2] = D2B(setTime->hour);
-//	tempTime[3] = D2B(setTime->day);
-//	tempTime[4] = D2B(setTime->date);
-//	tempTime[5] = D2B(setTime->month);
-//	tempTime[6] = D2B(setTime->year);
-//	
-//	HAL_I2C_Mem_Write(&hi2c1,DS1307_ADDR, 0x00, 1, tempTime, sizeof(tempTime),1000);
-//}
 
-//void GET_TIME(DS1037_Time *getTime)
-//{
-//	uint8_t temptime[7];
-//	HAL_I2C_Mem_Read(&hi2c1, DS1307_ADDR, 0x00, 1, temptime, sizeof(temptime),1000);
-//	getTime->sec = B2D(temptime[0]);
-//	getTime->min = B2D(temptime[1]);
-//	getTime->hour = B2D(temptime[2]);
-//	getTime->day = B2D(temptime[3]);
-//	getTime->date = B2D(temptime[4]);
-//	getTime->month = B2D(temptime[5]);
-//	getTime->year = B2D(temptime[6]);
-//}
 /* USER CODE END 0 */
 
 /**
@@ -139,8 +101,17 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+	HAL_Delay(1000);
+	lcd_init();
 	I2C_Config(&hi2c1);
 	SET_TIME(&time);
+	lcd_goto_XY(1,2);
+	lcd_send_string("PTD_910");
+	lcd_goto_XY(2,8);
+	lcd_send_string("Clock !");
+	HAL_Delay(4000);
+	lcd_clear_display();
+	HAL_Delay(100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -151,6 +122,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		GET_TIME(&time);
+		sprintf((char *)buff0, "%02d/%02d/%02d",time.date,time.month,time.year);
+		sprintf((char *)buff1, "%02d : %02d : %02d",time.hour,time.min,time.sec);
+		lcd_goto_XY(1,4);
+		lcd_send_string((char *)buff0);
+		lcd_goto_XY(2,2);
+		lcd_send_string((char *)buff1);
   }
   /* USER CODE END 3 */
 }
